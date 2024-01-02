@@ -13,12 +13,12 @@
 #include <fstream>
 #include <iomanip>
 
-DEFINE_string(txt_path, "./data/ch3/10.txt", "数据文件路径");
+DEFINE_string(txt_path, "../data/ch3/10.txt", "数据文件路径");
 DEFINE_double(antenna_angle, 12.06, "RTK天线安装偏角（角度）");
 DEFINE_double(antenna_pox_x, -0.17, "RTK天线安装偏移X");
 DEFINE_double(antenna_pox_y, -0.20, "RTK天线安装偏移Y");
 DEFINE_bool(with_ui, true, "是否显示图形界面");
-DEFINE_bool(with_odom, false, "是否加入轮速计信息");
+DEFINE_bool(with_odom, true, "是否加入轮速计信息");
 
 /**
  * 本程序演示使用RTK+IMU进行组合导航

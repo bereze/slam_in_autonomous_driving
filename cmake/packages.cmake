@@ -33,34 +33,24 @@ include_directories(${PCL_INCLUDE_DIRS})
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-# g2o 使用thirdparty中的
-include_directories(${PROJECT_SOURCE_DIR}/thirdparty/g2o/)
-set(g2o_libs
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o/lib/libg2o_stuff.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o/lib/libg2o_core.so
-	# ${PROJECT_SOURCE_DIR}/thirdparty/g2o/lib/libg2o_solver_cholmod.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o/lib/libg2o_solver_dense.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o/lib/libg2o_solver_csparse.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o/lib/libg2o_csparse_extension.so
-        ${PROJECT_SOURCE_DIR}/thirdparty/g2o/lib/libg2o_types_sba.so
-        ${CSPARSE_LIBRARY}
-        ${CHOLMOD_LIBRARY}
-        )
+# g2o
+set(g2o_DIR "/home/lmh/Thirdparty/g2o/install/lib/cmake/g2o")
+find_package(g2o REQUIRED)
 
 # ros
 # 为了2D scan, pointcloud2
 find_package(catkin REQUIRED COMPONENTS
-        roscpp
-        rospy
-        std_msgs
-        sensor_msgs
-        pcl_ros
-        pcl_conversions
-        )
+  roscpp
+  rospy
+  std_msgs
+  sensor_msgs
+  pcl_ros
+  pcl_conversions
+)
 include_directories(${catkin_INCLUDE_DIRS})
 
-find_package(Pangolin REQUIRED)
-include_directories(${Pangolin_INCLUDE_DIRS})
+# Pangolin
+find_package(Pangolin 0.8 REQUIRED)
 
 # yaml-cpp
 find_package(yaml-cpp REQUIRED)
@@ -70,63 +60,63 @@ include_directories(${yaml-cpp_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR}/thirdparty/)
 include_directories(${PROJECT_SOURCE_DIR}/thirdparty/velodyne/include)
 
-if(BUILD_WITH_UBUNTU1804)
-    function(extract_file filename extract_dir)
-        message(STATUS "Extract ${filename} to ${extract_dir} ...")
-        set(temp_dir ${extract_dir})
-        if(EXISTS ${temp_dir})
-            file(REMOVE_RECURSE ${temp_dir})
-        endif()
-        file(MAKE_DIRECTORY ${temp_dir})
-        execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xvzf ${filename}
-                WORKING_DIRECTORY ${temp_dir})
-    endfunction()
+if (BUILD_WITH_UBUNTU1804)
+  function(extract_file filename extract_dir)
+    message(STATUS "Extract ${filename} to ${extract_dir} ...")
+    set(temp_dir ${extract_dir})
+    if (EXISTS ${temp_dir})
+      file(REMOVE_RECURSE ${temp_dir})
+    endif ()
+    file(MAKE_DIRECTORY ${temp_dir})
+    execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xvzf ${filename}
+      WORKING_DIRECTORY ${temp_dir})
+  endfunction()
 
-    set(TBB_ROOT_DIR ${PROJECT_SOURCE_DIR}/thirdparty/tbb/oneTBB-2019_U8/oneTBB-2019_U8)
-    set(TBB_BUILD_DIR "tbb_build_dir=${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
-    set(TBB_BUILD_PREFIX "tbb_build_prefix=tbb")
+  set(TBB_ROOT_DIR ${PROJECT_SOURCE_DIR}/thirdparty/tbb/oneTBB-2019_U8/oneTBB-2019_U8)
+  set(TBB_BUILD_DIR "tbb_build_dir=${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
+  set(TBB_BUILD_PREFIX "tbb_build_prefix=tbb")
 
-    extract_file(${PROJECT_SOURCE_DIR}/thirdparty/tbb/2019_U8.tar.gz ${PROJECT_SOURCE_DIR}/thirdparty/tbb/oneTBB-2019_U8)
+  extract_file(${PROJECT_SOURCE_DIR}/thirdparty/tbb/2019_U8.tar.gz ${PROJECT_SOURCE_DIR}/thirdparty/tbb/oneTBB-2019_U8)
 
-    include(${TBB_ROOT_DIR}/cmake/TBBBuild.cmake)
+  include(${TBB_ROOT_DIR}/cmake/TBBBuild.cmake)
 
-    #message(STATUS "======TBB_BUILD_DIR = ${TBB_BUILD_DIR}")
-    #message(STATUS "======TBB_BUILD_PREFIX = ${TBB_BUILD_PREFIX}")
+  #message(STATUS "======TBB_BUILD_DIR = ${TBB_BUILD_DIR}")
+  #message(STATUS "======TBB_BUILD_PREFIX = ${TBB_BUILD_PREFIX}")
 
-    tbb_build(TBB_ROOT ${TBB_ROOT_DIR}
-            compiler=gcc-9
-            stdver=c++17
-            ${TBB_BUILD_DIR}
-            ${TBB_BUILD_PREFIX}
-            CONFIG_DIR
-            TBB_DIR)
+  tbb_build(TBB_ROOT ${TBB_ROOT_DIR}
+    compiler=gcc-9
+    stdver=c++17
+    ${TBB_BUILD_DIR}
+    ${TBB_BUILD_PREFIX}
+    CONFIG_DIR
+    TBB_DIR)
 
-    find_package(TBB REQUIRED)
+  find_package(TBB REQUIRED)
 
-    include_directories(${PROJECT_SOURCE_DIR}/thirdparty/tbb/oneTBB-2019_U8/oneTBB-2019_U8/include)
-    link_directories(${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/tbb_release)
+  include_directories(${PROJECT_SOURCE_DIR}/thirdparty/tbb/oneTBB-2019_U8/oneTBB-2019_U8/include)
+  link_directories(${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/tbb_release)
 
-    set(third_party_libs
-            ${catkin_LIBRARIES}
-            ${g2o_libs}
-            ${OpenCV_LIBS}
-            ${PCL_LIBRARIES}
-            ${Pangolin_LIBRARIES}
-            glog gflags
-            ${yaml-cpp_LIBRARIES}
-            yaml-cpp
-            TBB::tbb
-            )
-else()
-    set(third_party_libs
-            ${catkin_LIBRARIES}
-            ${g2o_libs}
-            ${OpenCV_LIBS}
-            ${PCL_LIBRARIES}
-            ${Pangolin_LIBRARIES}
-            glog gflags
-            ${yaml-cpp_LIBRARIES}
-            yaml-cpp
-            tbb
-            )
+  set(third_party_libs
+    ${catkin_LIBRARIES}
+    g2o::core
+    ${OpenCV_LIBS}
+    ${PCL_LIBRARIES}
+    pango_display pango_plot
+    glog gflags
+    ${yaml-cpp_LIBRARIES}
+    yaml-cpp
+    TBB::tbb
+  )
+else ()
+  set(third_party_libs
+    ${catkin_LIBRARIES}
+    g2o::core
+    ${OpenCV_LIBS}
+    ${PCL_LIBRARIES}
+    pango_display pango_plot
+    glog gflags
+    ${yaml-cpp_LIBRARIES}
+    yaml-cpp
+    tbb
+  )
 endif ()

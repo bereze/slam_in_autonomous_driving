@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
         fout << std::endl;
     };
 
-    std::ofstream fout("./data/ch3/gins.txt");
+    std::ofstream fout("../data/ch3/gins.txt");
     bool imu_inited = false, gnss_inited = false;
 
     std::shared_ptr<sad::ui::PangolinWindow> ui = nullptr;

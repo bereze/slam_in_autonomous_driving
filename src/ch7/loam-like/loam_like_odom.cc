@@ -103,7 +103,7 @@ void LoamLikeOdom::ProcessPointCloud(FullCloudPtr cloud) {
     }
 }
 
-bool LoamLikeOdom::IsKeyframe(const SE3& current_pose) {
+bool LoamLikeOdom::IsKeyframe(const SE3& current_pose) const {
     if ((cnt_frame_ - last_kf_id_) > 30) {
         return true;
     }

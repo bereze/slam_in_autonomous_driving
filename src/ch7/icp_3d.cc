@@ -9,7 +9,7 @@
 
 namespace sad {
 
-bool Icp3d::AlignP2P(SE3& init_pose) {
+bool Icp3d::AlignP2P(SE3& init_pose) const {
     LOG(INFO) << "aligning with point to point";
     assert(target_ != nullptr && source_ != nullptr);
 

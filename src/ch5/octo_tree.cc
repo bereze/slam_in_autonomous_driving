@@ -105,7 +105,7 @@ void OctoTree::ExpandNode(OctoTreeNode *node, const IndexVec &parent_idx, std::v
     }
 }
 
-Box3D OctoTree::ComputeBoundingBox() {
+Box3D OctoTree::ComputeBoundingBox() const {
     float min_values[3] = {std::numeric_limits<float>::max()};
     float max_values[3] = {-std::numeric_limits<float>::max()};
 

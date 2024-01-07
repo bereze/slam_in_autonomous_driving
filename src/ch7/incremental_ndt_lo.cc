@@ -55,7 +55,7 @@ void IncrementalNDTLO::AddCloud(CloudPtr scan, SE3& pose, bool use_guess) {
     cnt_frame_++;
 }
 
-bool IncrementalNDTLO::IsKeyframe(const SE3& current_pose) {
+bool IncrementalNDTLO::IsKeyframe(const SE3& current_pose) const {
     if (cnt_frame_ > 10) {
         return true;
     }

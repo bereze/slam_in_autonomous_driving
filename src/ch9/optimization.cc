@@ -94,7 +94,7 @@ void Optimization::Run() {
     LOG(INFO) << "done";
 }
 
-void Optimization::SaveG2O(const std::string& file_name) {
+void Optimization::SaveG2O(const std::string& file_name) const {
     std::ofstream fout(file_name);
     for (auto& v : vertices_) {
         v.second->write(fout);

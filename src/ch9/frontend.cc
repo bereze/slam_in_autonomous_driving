@@ -95,7 +95,7 @@ void Frontend::ExtractKeyFrame(const sad::NavStated& state) {
     }
 }
 
-void Frontend::FindGPSPose(std::shared_ptr<Keyframe> kf) {
+void Frontend::FindGPSPose(std::shared_ptr<Keyframe> kf) const {
     SE3 pose;
     GNSSPtr match;
     if (math::PoseInterp<GNSSPtr>(

@@ -211,7 +211,7 @@ void LioPreinteg::Predict() {
     }
 }
 
-void LioPreinteg::PCLCallBack(const sensor_msgs::PointCloud2::ConstPtr &msg) { sync_->ProcessCloud(msg); }
+void LioPreinteg::PCLCallBack(const sensor_msgs::PointCloud2::ConstPtr &msg) const { sync_->ProcessCloud(msg); }
 
 void LioPreinteg::LivoxPCLCallBack(const livox_ros_driver::CustomMsg::ConstPtr &msg) { sync_->ProcessCloud(msg); }
 

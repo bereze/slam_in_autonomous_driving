@@ -39,7 +39,7 @@ void Submap::SetPose(const SE2& pose) {
     field_.SetPose(pose);
 }
 
-void Submap::UpdateFramePoseWorld() {
+void Submap::UpdateFramePoseWorld() const {
     for (auto& frame : frames_) {
         frame->pose_ = pose_ * frame->pose_submap_;
     }

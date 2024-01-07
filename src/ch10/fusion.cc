@@ -201,7 +201,7 @@ bool Fusion::SearchRTK() {
     return false;
 }
 
-void Fusion::AlignForGrid(sad::Fusion::GridSearchResult& gr) {
+void Fusion::AlignForGrid(sad::Fusion::GridSearchResult& gr) const {
     /// 多分辨率
     pcl::NormalDistributionsTransform<PointType, PointType> ndt;
     ndt.setTransformationEpsilon(0.05);

@@ -34,7 +34,6 @@ find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 # g2o
-set(g2o_DIR "/home/lmh/Thirdparty/g2o/install/lib/cmake/g2o")
 find_package(g2o REQUIRED)
 
 # ros

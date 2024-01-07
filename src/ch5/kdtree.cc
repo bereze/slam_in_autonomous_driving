@@ -222,7 +222,7 @@ void KdTree::Clear() {
     tree_node_id_ = 0;
 }
 
-void KdTree::PrintAll() {
+void KdTree::PrintAll() const {
     for (const auto &np : nodes_) {
         auto node = np.second;
         if (node->left_ == nullptr && node->right_ == nullptr) {

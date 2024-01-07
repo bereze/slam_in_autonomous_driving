@@ -54,7 +54,7 @@ void IncNdt3d::GenerateNearbyGrids() {
     }
 }
 
-void IncNdt3d::UpdateVoxel(VoxelData& v) {
+void IncNdt3d::UpdateVoxel(VoxelData& v) const {
     if (flag_first_scan_) {
         if (v.pts_.size() > 1) {
             math::ComputeMeanAndCov(v.pts_, v.mu_, v.sigma_, [this](const Vec3d& p) { return p; });

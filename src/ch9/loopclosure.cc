@@ -181,7 +181,7 @@ void LoopClosure::ComputeForCandidate(sad::LoopCandidate& c) {
     c.ndt_score_ = ndt.getTransformationProbability();
 }
 
-void LoopClosure::SaveResults() {
+void LoopClosure::SaveResults() const {
     auto save_SE3 = [](std::ostream& f, SE3 pose) {
         auto q = pose.so3().unit_quaternion();
         Vec3d t = pose.translation();

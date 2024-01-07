@@ -21,7 +21,7 @@
 #include "common/message_def.h"
 #include "common/odom.h"
 #include "livox_ros_driver/CustomMsg.h"
-#include "tools/pointcloud_convert/velodyne_convertor.h"
+#include "common/pointcloud_convert/velodyne_convertor.h"
 
 #include "ch3/utm_convert.h"
 

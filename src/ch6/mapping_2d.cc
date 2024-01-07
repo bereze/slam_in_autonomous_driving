@@ -95,7 +95,7 @@ bool Mapping2D::ProcessScan(Scan2d::Ptr scan) {
     return true;
 }
 
-bool Mapping2D::IsKeyFrame() {
+bool Mapping2D::IsKeyFrame() const {
     if (last_keyframe_ == nullptr) {
         return true;
     }

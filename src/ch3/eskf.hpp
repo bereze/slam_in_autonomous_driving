@@ -280,6 +280,8 @@ bool ESKF<S>::ObserveWheelSpeed(const Odom& odom) {
     // update cov
     cov_ = (Mat18T::Identity() - K * H) * cov_;
 
+    std::cout << "cov:\n" << cov_ << std::endl;
+
     UpdateAndReset();
     return true;
 }

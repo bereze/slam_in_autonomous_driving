@@ -48,9 +48,9 @@ class IMUPreintegration {
     NavStated Predict(const NavStated &start, const Vec3d &grav = Vec3d(0, 0, -9.81)) const;
 
     /// 获取修正之后的观测量，bias可以与预积分时期的不同，会有一阶修正
-    SO3 GetDeltaRotation(const Vec3d &bg);
-    Vec3d GetDeltaVelocity(const Vec3d &bg, const Vec3d &ba);
-    Vec3d GetDeltaPosition(const Vec3d &bg, const Vec3d &ba);
+    SO3 GetDeltaRotation(const Vec3d &bg) const;
+    Vec3d GetDeltaVelocity(const Vec3d &bg, const Vec3d &ba) const;
+    Vec3d GetDeltaPosition(const Vec3d &bg, const Vec3d &ba) const;
 
    public:
     double dt_ = 0;                          // 整体预积分时间

@@ -98,7 +98,7 @@ class PangolinWindowImpl {
     bool UpdateState();
     bool UpdateCurrentScan();
 
-    void RenderLabels();
+    void RenderLabels() const;
 
    private:
     /// 窗口layout相关

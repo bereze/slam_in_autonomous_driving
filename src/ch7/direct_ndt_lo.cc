@@ -59,7 +59,7 @@ void DirectNDTLO::AddCloud(CloudPtr scan, SE3& pose) {
     }
 }
 
-bool DirectNDTLO::IsKeyframe(const SE3& current_pose) {
+bool DirectNDTLO::IsKeyframe(const SE3& current_pose) const {
     // 只要与上一帧相对运动超过一定距离或角度，就记关键帧
     SE3 delta = last_kf_pose_.inverse() * current_pose;
     return delta.translation().norm() > options_.kf_distance_ ||

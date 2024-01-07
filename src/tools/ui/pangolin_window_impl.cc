@@ -167,7 +167,7 @@ void PangolinWindowImpl::RenderClouds() {
     DrawAll();
 }
 
-void PangolinWindowImpl::RenderLabels() {
+void PangolinWindowImpl::RenderLabels() const {
     // 定位状态标识，显示在3D窗口中
     auto &d_cam3d_main = pangolin::Display(dis_3d_main_name_);
     d_cam3d_main.Activate(s_cam_main_);

@@ -10,7 +10,7 @@ PangolinWindow::~PangolinWindow() {
     Quit();
 }
 
-bool PangolinWindow::Init() {
+bool PangolinWindow::Init() const {
     impl_->cloud_global_need_update_.store(false);
     impl_->kf_result_need_update_.store(false);
     impl_->lidarloc_need_update_.store(false);
@@ -25,7 +25,7 @@ bool PangolinWindow::Init() {
     return inited;
 }
 
-void PangolinWindow::Quit() {
+void PangolinWindow::Quit() const {
     if (impl_->render_thread_.joinable()) {
         impl_->exit_flag_.store(true);
         // common::options::lio::flg_exit = true;
@@ -34,13 +34,13 @@ void PangolinWindow::Quit() {
     impl_->DeInit();
 }
 
-void PangolinWindow::UpdatePointCloudGlobal(const std::map<Vec2i, CloudPtr, less_vec<2>>& cloud) {
+void PangolinWindow::UpdatePointCloudGlobal(const std::map<Vec2i, CloudPtr, less_vec<2>>& cloud) const {
     std::lock_guard<std::mutex> lock(impl_->mtx_map_cloud_);
     impl_->cloud_global_map_ = cloud;
     impl_->cloud_global_need_update_.store(true);
 }
 
-void PangolinWindow::UpdateNavState(const NavStated& state) {
+void PangolinWindow::UpdateNavState(const NavStated& state) const {
     std::unique_lock<std::mutex> lock_lio_res(impl_->mtx_nav_state_);
 
     impl_->pose_ = SE3(state.R_, state.p_);
@@ -51,22 +51,22 @@ void PangolinWindow::UpdateNavState(const NavStated& state) {
     impl_->kf_result_need_update_.store(true);
 }
 
-void PangolinWindow::UpdateScan(CloudPtr cloud, const SE3& pose) {
+void PangolinWindow::UpdateScan(const CloudPtr& cloud, const SE3& pose) const {
     std::lock_guard<std::mutex> lock(impl_->mtx_current_scan_);
     *impl_->current_scan_ = *cloud;  // need deep copy
     impl_->current_pose_ = pose;
     impl_->current_scan_need_update_.store(true);
 }
 
-void PangolinWindow::SetCurrentScanSize(int current_scan_size) { impl_->max_size_of_current_scan_ = current_scan_size; }
+void PangolinWindow::SetCurrentScanSize(int current_scan_size) const { impl_->max_size_of_current_scan_ = current_scan_size; }
 
-void PangolinWindow::UpdateGps(const GNSS& gps) {
+void PangolinWindow::UpdateGps(const GNSS& gps) const {
     std::lock_guard<std::mutex> lock(impl_->mtx_gps_pose_);
     impl_->gps_pose_ = gps.utm_pose_;
     impl_->gps_need_update_.store(true);
 }
 
-void PangolinWindow::SetTImuLidar(const SE3& T_imu_lidar) { impl_->T_imu_lidar_ = T_imu_lidar; }
+void PangolinWindow::SetTImuLidar(const SE3& T_imu_lidar) const { impl_->T_imu_lidar_ = T_imu_lidar; }
 
 bool PangolinWindow::ShouldQuit() { return pangolin::ShouldQuit(); }
 

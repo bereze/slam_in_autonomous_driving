@@ -11,7 +11,7 @@
 
 namespace sad {
 
-bool Icp2d::AlignGaussNewton(SE2& init_pose) {
+bool Icp2d::AlignGaussNewton(SE2& init_pose) const {
     int iterations = 10;
     double cost = 0, lastCost = 0;
     SE2 current_pose = init_pose;

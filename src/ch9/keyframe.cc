@@ -22,7 +22,7 @@ void Keyframe::LoadScan(const std::string &path) {
     pcl::io::loadPCDFile(path + "/" + std::to_string(id_) + ".pcd", *cloud_);
 }
 
-void Keyframe::Save(std::ostream &os) {
+void Keyframe::Save(std::ostream &os) const {
     auto save_SE3 = [](std::ostream &f, SE3 pose) {
         auto q = pose.so3().unit_quaternion();
         Vec3d t = pose.translation();
